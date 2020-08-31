@@ -349,6 +349,7 @@ class Attention(nn.Module):
 
     def forward(self, hidden, output, enc_padding_mask):
         b, t_k, n = list(output.size())
+        output = output.contiguous()  # added by shanto 31 August
         output = output.view(-1, n)
         encoder_feature = self.W_h(output)
 

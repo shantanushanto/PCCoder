@@ -164,7 +164,10 @@ def train(args):
             optimizer.zero_grad()
 
             for k, v in batch.items():
-                batch[k] = v.cuda()
+                if use_cuda:
+                    batch[k] = v.cuda()  # commented by shanto
+                else:
+                    batch[k] = v  # added by shanto
 
             loss = model(batch['input'], batch['input_lens'], batch['output'], batch['output_lens'],
                          batch['input_padding_mask'], batch['output_padding_mask'], batch['dec_padding_mask'],
@@ -186,7 +189,10 @@ def train(args):
             test_losses = []
             for i_batch, batch in enumerate(test_data_loader):
                 for k, v in batch.items():
-                    batch[k] = v.cuda()
+                    if use_cuda:
+                        batch[k] = v.cuda()
+                    else:
+                        batch[k] = v
 
                 loss = model(batch['input'], batch['input_lens'], batch['output'], batch['output_lens'],
                              batch['input_padding_mask'], batch['output_padding_mask'], batch['dec_padding_mask'],
