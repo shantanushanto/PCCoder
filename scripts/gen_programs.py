@@ -266,6 +266,7 @@ def main():
     parser.add_argument('--train_output_path', type=str, required=True)
     parser.add_argument('--test_output_path', type=str, required=True)
     parser.add_argument('--max_train_len', type=int, required=True)
+    parser.add_argument('--min_train_len', default=5, type=int, required=False)  # me
     parser.add_argument('--test_lengths', type=str, required=True,
                         help="List of test lengths to generate")
     parser.add_argument('--num_workers', type=int, default=8)
@@ -278,12 +279,16 @@ def main():
 
     test_lens = set([int(x) for x in args.test_lengths.split()])
 
-    if args.cache:
-        examples = load_cache(args.cache)
-        min_len = max([len(k) for k in examples])
-    else:
+    if args.min_train_len != -1:
         examples = {}
-        min_len = 0
+        min_len = args.min_train_len - 1  # as following loops start from +1
+    else:
+        if args.cache:
+            examples = load_cache(args.cache)
+            min_len = max([len(k) for k in examples])
+        else:
+            examples = {}
+            min_len = 0
 
     for program_len in range(min_len + 1, args.max_train_len + 1):
         num_programs = args.num_train + args.num_test
@@ -296,8 +301,7 @@ def main():
         existing_programs = list(examples.keys())
         counter = multiprocessing.Value('i', 0)
         new_programs = list(new_examples.keys())
-        discard_pool = multiprocessing.Pool(processes=args.num_workers, initializer=init_discard_identical_worker,
-                                            initargs=(existing_programs, counter, len(new_programs)))
+        discard_pool = multiprocessing.Pool(processes=args.num_workers, initializer=init_discard_identical_worker, initargs=(existing_programs, counter, len(new_programs)))
         new_program_parts = [new_programs[i::args.num_workers] for i in range(args.num_workers)]
 
         new_example_parts = [{p: new_examples[p] for p in programs} for programs in new_program_parts]
