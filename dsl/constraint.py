@@ -203,7 +203,7 @@ def get_constraints_from_statement(statement, constraint, null_allowed=False):
 
         return [ListConstraint(constraint.lmin, constraint.lmax, int_constraints)]
 
-    elif f == impl.ACCESS:
+    elif f in [impl.ACCESS, impl.SEARCH]:
         if null_allowed:
             return [IntConstraint(vmin=0),
                     ListConstraint(int_constraints=[copy.copy(constraint) for _ in range(L + 1)])]
@@ -212,7 +212,7 @@ def get_constraints_from_statement(statement, constraint, null_allowed=False):
             return [IntConstraint(vmin=0, vmax=0),
                     ListConstraint(lmin=1, int_constraints=[copy.copy(constraint) for _ in range(L + 1)])]
 
-    elif f in [impl.TAKE, impl.DROP]:
+    elif f in [impl.TAKE, impl.DROP, impl.DELETE]:
         return [IntConstraint(vmin=0),
                 constraint]
 

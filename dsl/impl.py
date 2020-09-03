@@ -14,6 +14,8 @@ TAKE = Function('TAKE', lambda n, xs: xs[:n], (INT, LIST), LIST)
 DROP = Function('DROP', lambda n, xs: xs[n:], (INT, LIST), LIST)
 ACCESS = Function('ACCESS', lambda n, xs: xs[n] if n >= 0 and len(xs) > n else None, (INT, LIST), INT)
 
+DELETE = Function('DELETE', lambda n, xs: [v for v in xs if v!=n], (INT, LIST), LIST)
+SEARCH = Function('SEARCH', lambda n, xs: xs.index(n) if n in xs else None, (INT, LIST), INT) # search by value and return index
 
 # lambda functions
 PLUS1 = Function('+1', lambda x: x + 1, INT, INT)
@@ -95,6 +97,9 @@ FIRST_ORDER_FUNCTIONS = [
     TAKE,
     DROP,
     ACCESS,
+
+    DELETE,
+    SEARCH
 ]
 
 ALL_FUNCTIONS = FIRST_ORDER_FUNCTIONS + HIGHER_ORDER_FUNCTIONS
