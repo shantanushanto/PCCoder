@@ -51,7 +51,7 @@ def launch_gen_prg_from_model(prod):
         result_path = os.path.join(router.expdata_root, 'model_rb_350k')
 
         pyutils.dir_choice(dir=result_path)
-        result_path = os.path.join(result_path, 'result')
+        result_path = os.path.join(result_path, f'result_{prg_len}')
 
         # make sure there is a space after each following line
         # python3.6 -m scripts.solve_problems dataset result model 60 5 --num_workers=8
