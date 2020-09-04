@@ -46,7 +46,7 @@ def launch_gen_prg_from_model(prod):
 
     for prg_len in [5, 7]:
         target = 'baseline.robustfill.solve_problems'
-        prg_path = os.path.join(router.input_root, f'RPS_cmaes_100_prg_{prg_len}.txt')
+        prg_path = os.path.join(router.input_root, f'testing_dataset_{prg_len}.txt')
         model_path = os.path.join(router.model_root, 'model_rb_350k/model_rb_350k.39')
         result_path = os.path.join(router.expdata_root, 'model_rb_350k')
 

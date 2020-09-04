@@ -90,6 +90,8 @@ class RobustFill(BaseModel):
 
         for i in range(min(program_max_seq_len, max_len)):
             prev_y = decoder_input[:, i].unsqueeze(1).repeat(1, params.num_examples).view(-1)
+            # prev_y: previous prg token, hidden: output_encoder_hidden (encoder attention output (first time))
+            # context: decoder give this context, input_encoder_output:
             out_dist, hidden, context = self.decoder(prev_y, hidden, context, input_encoder_output,
                                                      input_padding_mask, output_encoder_output, output_padding_mask)
 
