@@ -44,15 +44,15 @@ def launch_model_rb_train(prod):
 
 def launch_gen_prg_from_model(prod):
 
+    result_dir = os.path.join(router.expdata_root, 'model_rb_350k')
+    pyutils.dir_choice(dir=result_dir)
+
     for tm_limit in [60, 3*60*60]:
         for prg_len in [5, 7]:
             target = 'baseline.robustfill.solve_problems'
             prg_path = os.path.join(router.input_root, f'testing_dataset_{prg_len}.txt')
             model_path = os.path.join(router.model_root, 'model_rb_350k/model_rb_350k.39')
-            result_path = os.path.join(router.expdata_root, 'model_rb_350k')
-
-            pyutils.dir_choice(dir=result_path)
-            result_path = os.path.join(result_path, f'result_{tm_limit}_{prg_len}')
+            result_path = os.path.join(result_dir, f'result_{tm_limit}_{prg_len}')
 
             # make sure there is a space after each following line
             # python3.6 -m scripts.solve_problems dataset result model 60 5 --num_workers=8
