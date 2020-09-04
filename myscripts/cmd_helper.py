@@ -44,22 +44,23 @@ def launch_model_rb_train(prod):
 
 def launch_gen_prg_from_model(prod):
 
-    for prg_len in [5, 7]:
-        target = 'baseline.robustfill.solve_problems'
-        prg_path = os.path.join(router.input_root, f'testing_dataset_{prg_len}.txt')
-        model_path = os.path.join(router.model_root, 'model_rb_350k/model_rb_350k.39')
-        result_path = os.path.join(router.expdata_root, 'model_rb_350k')
+    for tm_limit in [60, 3*60*60]:
+        for prg_len in [5, 7]:
+            target = 'baseline.robustfill.solve_problems'
+            prg_path = os.path.join(router.input_root, f'testing_dataset_{prg_len}.txt')
+            model_path = os.path.join(router.model_root, 'model_rb_350k/model_rb_350k.39')
+            result_path = os.path.join(router.expdata_root, 'model_rb_350k')
 
-        pyutils.dir_choice(dir=result_path)
-        result_path = os.path.join(result_path, f'result_{prg_len}')
+            pyutils.dir_choice(dir=result_path)
+            result_path = os.path.join(result_path, f'result_{tm_limit}_{prg_len}')
 
-        # make sure there is a space after each following line
-        # python3.6 -m scripts.solve_problems dataset result model 60 5 --num_workers=8
-        cmd = f'python -m {target} {prg_path} {result_path} {model_path} 60 {prg_len} --num_workers=8'
+            # make sure there is a space after each following line
+            # python3.6 -m scripts.solve_problems dataset result model 60 5 --num_workers=8
+            cmd = f'python -m {target} {prg_path} {result_path} {model_path} {tm_limit} {prg_len} --num_workers=8'
 
-        print(f'{cmd}')
-        if prod:
-            os.system(f'{cmd}')
+            print(f'{cmd}')
+            if prod:
+                os.system(f'{cmd}')
 
 
 def main():

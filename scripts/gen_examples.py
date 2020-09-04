@@ -36,6 +36,10 @@ def main():
         with open(prgio_str_path, 'w') as f:
             write_programs_to_file(f=f, programs=train_programs, examples=examples)
 
+'''
+-> Generate string program from RPS pipeline program
+-> Run this script to generate io and program string that accept PCCoder
+'''
 
 if __name__ == '__main__':
     main()
