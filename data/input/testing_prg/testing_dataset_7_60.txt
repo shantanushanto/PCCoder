@@ -1,0 +1,1 @@
+{"program": "LIST|INT|MAP,/3,0|MINIMUM,2|MAP,*2,2|TAKE,3,4|MAXIMUM,5|SUM,5|HEAD,5", "examples": [{"inputs": [[15, 3, 7, 18, 43, 5, 25, 24], -27], "output": 10}, {"inputs": [[40, 89, 51], 196], "output": 26}, {"inputs": [[84, 15, 20, 33], 37], "output": 56}, {"inputs": [[6, 61, 32, 11, 37, 28], -46], "output": 4}, {"inputs": [[33, 59], -155], "output": 22}]}

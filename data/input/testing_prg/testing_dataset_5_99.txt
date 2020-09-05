@@ -1,0 +1,1 @@
+{"program": "LIST|INT|DROP,1,0|SCAN1L,-,2|MAP,*2,3|SCAN1L,-,4|SCAN1L,min,5", "examples": [{"inputs": [[-2, 1, -3, 2, 3], 85], "output": []}, {"inputs": [[4, -4, -3, -5, 3], 234], "output": []}, {"inputs": [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 100], "output": []}, {"inputs": [[0, -3, -8, -5], 122], "output": []}, {"inputs": [[-127], 102], "output": []}]}

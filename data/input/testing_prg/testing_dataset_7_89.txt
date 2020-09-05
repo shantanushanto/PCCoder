@@ -1,0 +1,1 @@
+{"program": "LIST|INT|SCAN1L,+,0|MAP,/4,2|FILTER,EVEN,3|SUM,4|SCAN1L,+,4|SCAN1L,max,6|SUM,7", "examples": [{"inputs": [[21], 43], "output": 0}, {"inputs": [[19, 31, 20], 79], "output": 20}, {"inputs": [[-1, 0, -1, -1, -1, 0, 0, 0, 0], -3], "output": 0}, {"inputs": [[12, -9, -12, 10], -129], "output": 0}, {"inputs": [[11, 21, -30], 152], "output": 22}]}
