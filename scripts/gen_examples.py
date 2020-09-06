@@ -17,13 +17,13 @@ def get_prg(prg_str):
 def main():
     for prg_len in [5, 7]:
         prg_str_path = os.path.join(router.input_root, f'RPS_cmaes_100_prg_{prg_len}.txt')
-        prgio_str_path = os.path.join(router.input_root, f'testing_dataset_{prg_len}.txt')
-
-        examples = {}
-        train_programs = []
 
         with open(prg_str_path, 'r') as f:
-            for line in f:
+            for prg_id, line in enumerate(f):
+
+                examples = {}
+                train_programs = []
+
                 prg = get_prg(prg_str=line.strip('\n'))
                 io = get_prg_io(prg=prg)
 
@@ -32,9 +32,10 @@ def main():
                     train_programs.append(prg)
                     examples[prg] = io
 
-
-        with open(prgio_str_path, 'w') as f:
-            write_programs_to_file(f=f, programs=train_programs, examples=examples)
+                    # writing each program to a file
+                    prgio_str_path = os.path.join(router.input_root, f'testing_prg/testing_dataset_{prg_len}_{prg_id}.txt')
+                    with open(prgio_str_path, 'w') as f:
+                        write_programs_to_file(f=f, programs=train_programs, examples=examples)
 
 '''
 -> Generate string program from RPS pipeline program

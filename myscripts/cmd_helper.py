@@ -59,7 +59,9 @@ def launch_gen_prg_from_model(cluster='palab', prod=False):
                     model_path = os.path.join(router.model_root, 'model_rb_350k/model_rb_350k.39')
                     result_path = os.path.join(data_dir, f'result_{tm_limit}_{prg_len}_{prg_id}')
 
-                    cmd = f'python -m {target} {prg_path} {result_path} {model_path} {tm_limit} {prg_len} --num_workers=1'
+                    # for module run we need full path
+                    py_module = f'PYTHONPATH={router.project_root}'
+                    cmd = f'{py_module} python -m {target} {prg_path} {result_path} {model_path} {tm_limit} {prg_len} --num_workers=1'
 
                     task = JobLauncher.Task(cmd=cmd, out=result_path)
                     tasks.append(task)
@@ -69,9 +71,13 @@ def launch_gen_prg_from_model(cluster='palab', prod=False):
     # callback to use
     callback_batch_gen = JobLauncher.TaskGenerator(batch_generator=batch_generator, data_dir=data_dir).get_callback_batch_gen()
 
+    sbatch_extra_cmd = 'conda activate pccoder\n'
+    if cluster=='palab':  # ignoring gpu node as it is creating problem with tensor gpu
+        sbatch_extra_cmd = f'#SBATCH --exclude=gpu01\n\n{sbatch_extra_cmd}'
+
     # launch job in cluster
     JobLauncher.launch_job(cluster=cluster, callback_batch_gen=callback_batch_gen, job_name='cmaes_bin', submission_check=not prod,
-               acc_id=122818927574, time='15:00:00', atlas_ratio=4, sbatch_extra_cmd='conda activate pccoder')
+               acc_id=122818927574, time='15:00:00', atlas_ratio=4, sbatch_extra_cmd=sbatch_extra_cmd, no_exlude_node=0)
 
     # create readme file in the folder to easy remember
     commonutils.readme(data_dir)
