@@ -57,7 +57,7 @@ def launch_gen_prg_from_model(cluster='palab', prod=False):
                     target = 'baseline.robustfill.solve_problems'
                     prg_path = os.path.join(router.input_root, f'testing_prg/testing_dataset_{prg_len}_{prg_id}.txt')
                     model_path = os.path.join(router.model_root, 'model_rb_350k/model_rb_350k.39')
-                    result_path = os.path.join(data_dir, f'result_{tm_limit}_{prg_len}_{prg_id}.out')
+                    result_path = os.path.join(data_dir, f'result_{tm_limit}_{prg_len}_{prg_id}')
 
                     cmd = f'python -m {target} {prg_path} {result_path} {model_path} {tm_limit} {prg_len} --num_workers=1'
 
