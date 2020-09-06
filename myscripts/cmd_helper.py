@@ -42,7 +42,7 @@ def launch_model_rb_train(prod):
         os.system(f'{cmd}')
 
 
-def launch_gen_prg_from_model(cluster='palab', prod=False):
+def launch_gen_prg_from_model(cluster='palab', prod=False, atlas_ratio=4):
     # dir to save data in
     data_dir = os.path.join(router.expdata_root, 'model_rb_individual')  # as there are different nn but fitness function name is nn, use different directory
     data_dir = pyutils.dir_choice(data_dir)  # dir checking
@@ -77,7 +77,7 @@ def launch_gen_prg_from_model(cluster='palab', prod=False):
 
     # launch job in cluster
     JobLauncher.launch_job(cluster=cluster, callback_batch_gen=callback_batch_gen, job_name='cmaes_bin', submission_check=not prod,
-               acc_id=122818927574, time='15:00:00', atlas_ratio=4, sbatch_extra_cmd=sbatch_extra_cmd, no_exlude_node=0)
+               acc_id=122818927574, time='15:00:00', atlas_ratio=atlas_ratio, sbatch_extra_cmd=sbatch_extra_cmd, no_exlude_node=0)
 
     # create readme file in the folder to easy remember
     commonutils.readme(data_dir)
@@ -93,6 +93,9 @@ def main():
                         help="Cluster name.")
     parser.add_argument("--prod", default=False, required=False, action='store_true',
                         help="Submit in production cluster.")
+
+    parser.add_argument("--atlas_ratio", default=4, required=False, help="Atlas ratio if needed", type=int)
+
     args = parser.parse_args()
 
     if args.which == 0:
@@ -100,7 +103,7 @@ def main():
     elif args.which == 1:
         launch_model_rb_train(args.prod)
     elif args.which == 2:
-        launch_gen_prg_from_model(cluster=args.cluster, prod=args.prod)
+        launch_gen_prg_from_model(cluster=args.cluster, prod=args.prod, atlas_ratio=args.atlas_ratio)
 
 
 if __name__ == '__main__':
