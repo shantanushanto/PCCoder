@@ -71,7 +71,7 @@ def launch_gen_prg_from_model(cluster='palab', prod=False):
 
     # launch job in cluster
     JobLauncher.launch_job(cluster=cluster, callback_batch_gen=callback_batch_gen, job_name='cmaes_bin', submission_check=not prod,
-               acc_id=122818927574, time='15:00:00', atlas_ratio=4)
+               acc_id=122818927574, time='15:00:00', atlas_ratio=4, sbatch_extra_cmd='conda activate pccoder')
 
     # create readme file in the folder to easy remember
     commonutils.readme(data_dir)
