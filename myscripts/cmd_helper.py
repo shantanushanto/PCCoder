@@ -51,13 +51,13 @@ def launch_gen_prg_from_model(cluster='palab', prod=False, atlas_ratio=4):
     def batch_generator():
         tasks = []
 
-        for tm_limit in [60, 3 * 60 * 60]:
+        for tm_limit in [60, 60*30, 60*60]:
             for prg_len in [5, 7]:
                 for prg_id in range(100):
                     target = 'baseline.robustfill.solve_problems'
                     prg_path = os.path.join(router.input_root, f'testing_prg/testing_dataset_{prg_len}_{prg_id}.txt')
                     model_path = os.path.join(router.model_root, 'model_rb_350k/model_rb_350k.39')
-                    result_path = os.path.join(data_dir, f'result_{tm_limit}_{prg_len}_{prg_id}')
+                    result_path = os.path.join(data_dir, f'result_{tm_limit}_{prg_len}_{prg_id}.log')
 
                     # for module run we need full path
                     py_module = f'PYTHONPATH={router.project_root}'
